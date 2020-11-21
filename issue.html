@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="public" max-age="2628000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Quantitative Algo-Trading</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <style>
+       @media (min-width: 481px) and (max-width: 767px) {
+      .issue-form{
+         overflow-y: scroll !important;
+      }
+    }
+    @media (min-width: 320px) and (max-width: 480px) {
+      .issue-form{
+        overflow-y: scroll !important;
+      }
+    }
+    </style>
+  </head>
+
+  <body class="c-app" style="font-family: Avenir, Helvetica, Arial, sans-serif;">
+    <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async="">
+          {
+            "symbols": [{
+                "description": "Sensex",
+                "proName": "BSE:SENSEX"
+              },
+              {
+                "description": "USD/INR",
+                "proName": "OANDA:USDINR"
+              },
+              {
+                "description": "Brent Crude Oil",
+                "proName": "TVC:UKOIL"
+              },
+              {
+                "description": "S&P 500",
+                "proName": "FOREXCOM:SPXUSD"
+              },
+              {
+                "description": "Reliance",
+                "proName": "BSE:RELIANCE"
+              }
+            ],
+            "colorTheme": "light",
+            "isTransparent": false,
+            "displayMode": "regular",
+            "locale": "in"
+          }
+        </script>
+      </div>
+      <ul class="c-header-nav ml-auto mr-4">
+        <div data-role="appbar" data-expand-point="md" style="margin-top:50px;background-color:white !important;">
+          <a href="index.html" class="brand no-hover" style="font-family: 'Roboto', sans-serif;">
+            <object type="image/svg+xml" data="assets/logo.svg" height="100%" width="100%" class="logo">
+            </object>
+          </a>
+
+          <ul class="app-bar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketnews.html">News</a></li>
+            <li><a href="marketinfo.html"> Market Data</a></li>
+            <li><a href="strategy.html">Strategy</a></li>
+            <li><a href="forex.html" class="active">Forex</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+          </ul>
+        </div>
+      </ul>
+    </header>
+    <div class="c-wrapper c-fixed-components">
+      <div class="c-body issue-form" style=" align-content: center; margin:auto; overflow-y:hidden; padding-top:40px;">
+        <main class="c-main" style="margin-top:50px;">
+          <div class="container-fluid ">
+            <div class="fade-in">
+              <div class="row">
+
+                <div class="card">
+                  <div class="card-body">
+                    <form class="form-horizontal" action="https://formsubmit.co/0ff04e44a1498ecddc47612e40faebcd" method="POST" enctype="multipart/form-data" name="myForm">
+                      <div class="row">
+                        <div class=" col-md-6 col-xs-12">
+                          <label class="col-md-6 col-xs-12 col-form-label" for="text-input"><strong>Name</strong></label>
+                          <div class="col-md-12 col-xs-12">
+                            <input class="form-control" id="text-input" type="text" name="name" placeholder="Enter Name" required/>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                          <label class="col-md-6 col-xs-12 col-form-label" for="email-input"><strong>Email</strong></label>
+                          <div class="col-md-12 col-xs-12">
+                            <input class="form-control" type="email" placeholder="Enter Email" name="email" title="Enter a valid email address" onclick="select()" required/> 
+                                <div id="emailmsg" style="color:Red;display:none">Enter valid e-mail address</div>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <div class=" row">
+                        <div class="col-md-12">
+
+                          <label class="col-md-6 col-form-label" for="text-input"><strong>Message</strong></label>
+                          <div class="col-md-12">
+                            <textarea class="form-control" id="textarea-input" name="message" rows="9" placeholder="Enter Message" required></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer" >
+                        <button class="btn btn-sm btn-primary" type="submit"  onclick="return validateUser()" value="Submit"  > Submit</button>
+                    </div>
+
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <footer class="c-footer">
+        <div>&nbsp;&nbsp;&nbsp;Quantitative Algo-Trading © 2020</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="ml-auto" style="float: left;">Powered by&nbsp;<a href="https://in.tradingview.com/">TradingView</a>
+        </div>
+      </footer>
+      <script type="text/javascript">
+      function validateUser()
+      {
+          var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          var x=document.forms["myForm"]["email"].value;
+          if(x.match(mailformat))
+          {
+            return true;
+          }
+          else{
+            document.getElementById("emailmsg").style.display="";
+              return false;
+          }
+      }
+      </script>
+    <!--Necessary Scripts-->
+    <link defer="" href="css/style.min.css" rel="stylesheet">
+    <link defer="" rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+    <script async="" defer="" src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+   </div> 
+  </body>
+</html>

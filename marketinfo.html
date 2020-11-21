@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="public" max-age="2628000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Quantitative Algo-Trading</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="js/symbols.js"></script>
+    <script src="js/init-app.js"></script>
+    <style>
+      .floating-tooltip-2 {
+        width: 96px;
+        height: 300px;
+        position: absolute;
+        display: none;
+        padding: 8px;
+        box-sizing: border-box;
+        font-size: 12px;
+        color: '#20262E';
+        background-color: rgba(255, 255, 255, 0.23);
+        text-align: left;
+        z-index: 1000;
+        top: 12px;
+        left: 12px;
+        pointer-events: none;
+        border-radius: 4px 4px 0px 0px;
+        border-bottom: none;
+        box-shadow: 0 2px 5px 0 rgba(117, 134, 150, 0.45);
+      }    
+    </style>
+  </head>
+
+  <body class="c-app" style="font-family: Avenir, Helvetica, Arial, sans-serif;">
+    <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async="">
+          {
+            "symbols": [{
+                "description": "Sensex",
+                "proName": "BSE:SENSEX"
+              },
+              {
+                "description": "USD/INR",
+                "proName": "OANDA:USDINR"
+              },
+              {
+                "description": "Brent Crude Oil",
+                "proName": "TVC:UKOIL"
+              },
+              {
+                "description": "S&P 500",
+                "proName": "FOREXCOM:SPXUSD"
+              },
+              {
+                "description": "Reliance",
+                "proName": "BSE:RELIANCE"
+              }
+            ],
+            "colorTheme": "light",
+            "isTransparent": false,
+            "displayMode": "regular",
+            "locale": "in"
+          }
+        </script>
+      </div>
+      <ul class="c-header-nav ml-auto mr-4">
+        <div data-role="appbar" data-expand-point="md" style="margin-top:50px;background-color:white !important;">
+          <a href="index.html" class="brand no-hover" style="font-family: 'Roboto', sans-serif;">
+            <object type="image/svg+xml" data="assets/logo.svg" height="100%" width="100%" class="logo">
+            </object>
+          </a>
+          <ul class="app-bar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketnews.html">News</a></li>
+            <li><a href="marketinfo.html" class="active"> Market Data</a></li>
+            <li><a href="strategy.html">Strategy</a></li>
+            <li><a href="forex.html">Forex</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+          </ul>
+        </div>
+      </ul>
+    </header>
+    <div class="c-wrapper c-fixed-components">
+      <div class="c-body" style="padding-top:15px;">
+        <main class="c-main" style="margin-top:95px; margin-bottom: 70px;">
+          <div class="container-fluid">
+            <div class="fade-in">
+
+              <div class="row">
+                <div class="col-xs-8 col-md-12 col-lg-6" >
+                  <div class="tradingview-widget-container col-xs-12"> 
+                    <h2 style="padding-left:10px; ">Select company</h2>  
+                        <form style="width: 20rem; padding-bottom: 25px; padding-left:10px;" >
+                           <select id="symbol" style="width:80%;">
+                            <option value="AAPL">Select a company</option>
+                          </select>
+                        </form>
+                    <div class="card col-xs-12">
+                      <div class="card-body" style="overflow-x:scroll; ">
+                        <div id="charter" ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-12">  
+                  <div class="tradingview-widget-container" style="padding-left: 10px;">
+                    <h2>Indices</h2>
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async="">
+                      {
+                        "width": "100%",
+                        "height": 660,
+                        "symbolsGroups": [{
+                          "name": "Indices",
+                          "originalName": "Indices",
+                          "symbols": [{
+                              "name": "FOREXCOM:SPXUSD",
+                              "displayName": "S&P 500"
+                            },
+                            {
+                              "name": "FOREXCOM:NSXUSD",
+                              "displayName": "Nasdaq 100"
+                            },
+                            {
+                              "name": "FOREXCOM:DJI",
+                              "displayName": "Dow 30"
+                            },
+                            {
+                              "name": "INDEX:NKY",
+                              "displayName": "Nikkei 225"
+                            },
+                            {
+                              "name": "INDEX:DEU30",
+                              "displayName": "DAX Index"
+                            },
+                            {
+                              "name": "FOREXCOM:UKXGBP",
+                              "displayName": "FTSE 100"
+                            },
+                            {
+                              "name": "BSE:SENSEX",
+                              "displayName": "BSE SENSEX"
+                            },
+                            {
+                              "name": "NSE:NIFTY",
+                              "displayName": "NIFTY 50"
+                            }
+                          ]
+                        }],
+                        "colorTheme": "light",
+                        "isTransparent": false,
+                        "locale": "en"
+                      }
+                    </script>
+                  </div>
+                </div>
+              </div>
+
+
+              <div style="display:flex; flex-direction: row; justify-content: space-around; align-items: center; padding-top:65px; height: 660px;">
+                <div class="tradingview-widget-container">
+                  <h2>Stock Screener</h2>
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async="">
+                    {
+                      "width": "100%",
+                      "height": "100%",
+                      "defaultColumn": "overview",
+                      "defaultScreen": "most_capitalized",
+                      "market": "india",
+                      "showToolbar": true,
+                      "colorTheme": "light",
+                      "locale": "en"
+                    }
+                  </script>
+                </div>
+              </div>
+              <div class="tradingview-widget-container" style=" padding-top:65px;">
+                <h2>Commodities and Bonds</h2>
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async="">
+                  {
+                    "width": "100%",
+                    "height": 750,
+                    "symbolsGroups": [{
+                        "name": "Commodities",
+                        "originalName": "Commodities",
+                        "symbols": [{
+                            "name": "CME_MINI:ES1!",
+                            "displayName": "E-Mini S&P"
+                          },
+                          {
+                            "name": "CME:6E1!",
+                            "displayName": "Euro"
+                          },
+                          {
+                            "name": "COMEX:GC1!",
+                            "displayName": "Gold"
+                          },
+                          {
+                            "name": "NYMEX:CL1!",
+                            "displayName": "Crude Oil"
+                          },
+                          {
+                            "name": "NYMEX:NG1!",
+                            "displayName": "Natural Gas"
+                          },
+                          {
+                            "name": "CBOT:ZC1!",
+                            "displayName": "Corn"
+                          },
+                          {
+                            "name": "CURRENCYCOM:SILVER",
+                            "displayName": "Silver"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Bonds",
+                        "originalName": "Bonds",
+                        "symbols": [{
+                            "name": "CME:GE1!",
+                            "displayName": "Eurodollar"
+                          },
+                          {
+                            "name": "CBOT:ZB1!",
+                            "displayName": "T-Bond"
+                          },
+                          {
+                            "name": "CBOT:UB1!",
+                            "displayName": "Ultra T-Bond"
+                          },
+                          {
+                            "name": "EUREX:FGBL1!",
+                            "displayName": "Euro Bund"
+                          },
+                          {
+                            "name": "EUREX:FBTP1!",
+                            "displayName": "Euro BTP"
+                          },
+                          {
+                            "name": "EUREX:FGBM1!",
+                            "displayName": "Euro BOBL"
+                          }
+                        ]
+                      }
+                    ],
+                    "colorTheme": "light",
+                    "isTransparent": false,
+                    "locale": "en"
+                  }
+                </script>
+              </div>
+
+
+            </div>
+          </div>
+        </main>
+        <footer class="c-footer" style="margin-top: 65px;">
+          <a href="issue.html" style=" text-decoration: underline;">Report an Issue</a> &nbsp;&nbsp;&nbsp;|
+          <div>&nbsp;&nbsp;&nbsp;Quantitative Algo-Trading © 2020</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="ml-auto" style="float: left;">Powered by&nbsp;<a href="https://in.tradingview.com/">TradingView</a>
+          </div>
+        </footer>
+      </div>
+      <!--Necessary Scripts-->
+      <link defer="" href="css/style.min.css" rel="stylesheet">
+      <link defer="" rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+      <script async="" defer="" src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+    </div>
+    <script>
+      var symbolList = [];
+      var nameList = [];
+      for (i = 0; i < symbols.length; i++) {
+        symbolList[i] = symbols[i]["Symbol"];
+        nameList[i] = symbols[i]['Company Name']
+      }
+
+      const symbol = document.getElementById('symbol');
+      for (var i = 0; i < symbolList.length; i++) {
+        var sym = symbolList[i];
+        var nameText = nameList[i];
+        var el = document.createElement("option");
+        el.text = nameText;
+        el.value = sym;
+        symbol.add(el);
+      }
+      symbol.addEventListener('change', getData);
+      async function getData() {
+        let sym = symbol.value;
+        console.log(sym);
+        var chartD = [];
+        let response = await fetch(
+          "https://alpha-vantage.p.rapidapi.com/query?outputsize=compact&datatype=json&function=TIME_SERIES_DAILY&symbol=" +
+          `${sym}`, {
+            "method": "GET",
+            "headers": {
+              "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
+              "x-rapidapi-key": appConfig[0].alphaVantage
+            }
+          });
+        var result = await response.json();
+        var dates = Object.keys(result['Time Series (Daily)']);
+        var high = Object.values(result['Time Series (Daily)']);
+        let highValues = high.map(x => {
+          return x['2. high']
+        });
+
+        for (let i = 0; i < dates.length; i++) {
+          var tempObj = {};
+          tempObj["time"] = dates[i];
+          tempObj["value"] = Number(highValues[i]);
+          chartD.push(tempObj);
+        }
+        series.setData(chartD);
+        console.log(chartD);
+      }
+
+      var container = document.getElementById('charter');
+
+      var width = 600;
+      var height = 400;
+
+      var chart = LightweightCharts.createChart(container, {
+        width: width,
+        height: height,
+        priceScale: {
+          scaleMargins: {
+            top: 0.2,
+            bottom: 0.2,
+          },
+          position: 'left',
+          borderVisible: false,
+        },
+        timeScale: {
+          borderVisible: false,
+        },
+        grid: {
+          horzLines: {
+            color: '#eee',
+          },
+          vertLines: {
+            color: '#ffffff',
+          },
+        },
+        crosshair: {
+          horzLine: {
+            visible: false,
+            labelVisible: false
+          },
+          vertLine: {
+            visible: true,
+            style: 0,
+            width: 2,
+            color: 'rgba(32, 38, 46, 0.1)',
+            labelVisible: false,
+          }
+        },
+      });
+
+      var series = chart.addAreaSeries({
+        topColor: 'rgba(0, 120, 255, 0.2)',
+        bottomColor: 'rgba(0, 120, 255, 0.0)',
+        lineColor: 'rgba(0, 120, 255, 1)',
+        lineWidth: 3
+      });
+
+
+
+      function businessDayToString(businessDay) {
+        return new Date(Date.UTC(businessDay.year, businessDay.month - 1, businessDay.day, 0, 0, 0)).toLocaleDateString();
+      }
+
+      var toolTipWidth = 96;
+      var toolTipHeight = 80;
+      var toolTipMargin = 15;
+      var priceScaleWidth = 50;
+
+      var toolTip = document.createElement('div');
+      toolTip.className = 'floating-tooltip-2';
+      container.appendChild(toolTip);
+
+      // update tooltip
+      chart.subscribeCrosshairMove(function(param) {
+        if (!param.time || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
+          toolTip.style.display = 'none';
+          return;
+        }
+
+        var dateStr = LightweightCharts.isBusinessDay(param.time) ?
+          businessDayToString(param.time) :
+          new Date(param.time * 1000).toLocaleDateString();
+
+        toolTip.style.display = 'block';
+        var price = param.seriesPrices.get(series);
+        toolTip.innerHTML = '<div style="color: rgba(0, 120, 255, 0.9)">⬤ ' + `${symbol.value}` + '</div>' +
+          '<div style="font-size: 24px; margin: 4px 0px; color: #20262E">$' + (Math.round(price * 100) / 100).toFixed(
+            2) + '</div>' +
+          '<div>' + dateStr + '</div>';
+
+        var left = param.point.x;
+
+
+        if (left > width - toolTipWidth - toolTipMargin) {
+          left = width - toolTipWidth;
+        } else if (left < toolTipWidth / 2) {
+          left = priceScaleWidth;
+        }
+
+        toolTip.style.left = left + 'px';
+        toolTip.style.top = 0 + 'px';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "qat",
+  "version": "1.0.0",
+  "description": "The Right Way to Invest",
+  "main": "index.html",
+  "scripts": {
+    "serve": "browser-sync start --server --files css/*.css"
+  },
+  "keywords": [
+    "stock",
+    "market",
+    "market",
+    "finance",
+    "index",
+    "commodity",
+    "futures",
+    "forex",
+    "prices",
+    "stock",
+    "exchange",
+    "bse",
+    "nasdaq"
+  ],
+  "author": "Octal++",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}

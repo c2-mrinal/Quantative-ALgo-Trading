@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Cache-Control" content="public" max-age="2628000">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="The Right Way to Invest">
+  <meta name="author" content="Octal++">
+  <meta name="keyword"
+    content="stock market,market,finance,index,commodity,futures,forex,prices,stock exchange,bse,nasdaq">
+  <title>Quantitative Algo-Trading</title>
+  <script src="js/init-app.js"></script>
+  <style type="text/css" media="screen">
+    #news img{
+      margin-top: 30px;
+    }
+    @media (min-width: 481px) and (max-width: 767px) {
+      #news p{
+        font-size: 1rem;
+      }
+      #news img{
+        margin-top: 5rem;
+        width:600vw;
+        height: 50%;
+      }
+    }
+  @media (min-width: 320px) and (max-width: 480px) {
+      #news h4{
+        font-size: 15px;
+      }
+      #news p{
+        font-size: 13px;
+      }
+       #news img{
+        margin-top: 70%;
+        width:500vw;
+        height: 50%;
+      }
+  }
+  </style>
+
+</head>
+
+<body class="c-app" onload="fetchNews()" style="font-family: Avenir, Helvetica, Arial, sans-serif;">
+  <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+        async="">
+        {
+          "symbols" : [{
+              "description": "Sensex",
+              "proName": "BSE:SENSEX"
+            },
+            {
+              "description": "USD/INR",
+              "proName": "OANDA:USDINR"
+            },
+            {
+              "description": "Brent Crude Oil",
+              "proName": "TVC:UKOIL"
+            },
+            {
+              "description": "S&P 500",
+              "proName": "FOREXCOM:SPXUSD"
+            },
+            {
+              "description": "Reliance",
+              "proName": "BSE:RELIANCE"
+            }
+          ],
+          "colorTheme" : "light",
+          "isTransparent" : false,
+          "displayMode" : "regular",
+          "locale" : "in"
+        }
+      </script>
+    </div>
+    <ul class="c-header-nav ml-auto mr-4">
+      <div data-role="appbar" data-expand-point="md" style="margin-top:50px;background-color:white !important;">
+        <a href="index.html" class="brand no-hover" style="font-family: 'Roboto', sans-serif;">
+          <object type="image/svg+xml" data="assets/logo.svg" height="100%" width="100%" class="logo">
+          </object>
+        </a>
+        <ul class="app-bar-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="marketnews.html" class="active">News</a></li>
+          <li><a href="marketinfo.html"> Market Data</a></li>
+          <li><a href="strategy.html">Strategy</a></li>
+          <li><a href="forex.html">Forex</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+        </ul>
+      </div>
+    </ul>
+  </header>
+  <div class="c-wrapper c-fixed-components">
+    <div class="c-body" style="padding-top:15px;">
+      <main class="c-main" style="margin-top:95px;">
+        <div class="container-fluid">
+          <div class="fade-in">
+            <div class="card">
+              <div class="card-header">
+                <h2>Top Headlines</h2>
+              </div>
+              <div id="news" style="color: #2c2c2c !important;"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="c-footer" style="margin-top: 65px;">
+        <a href="issue.html" style=" text-decoration: underline;">Report an Issue</a> &nbsp;&nbsp;&nbsp;|
+        <div>&nbsp;&nbsp;&nbsp;Quantitative Algo-Trading © 2020</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="ml-auto" style="float: left;">Powered by&nbsp;<a href="https://in.tradingview.com/">TradingView</a>
+        </div>
+      </footer>
+    </div>
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+    <script>
+      async function fetchNews() {
+        var articleListDB = [];
+        var articleList = {
+          articleList: []
+        };
+        // Initialize Firebase
+        var firebaseConfig = appConfig[1];
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        //Fetch News
+        async function getNews() {
+          //Proxy server to bypass CORS
+          const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+          const newsAPIUrl = "https://newsapi.org/v2/top-headlines?country=in&category=business";
+          let response = await fetch(
+            proxyUrl + newsAPIUrl, {
+              "method": "GET",
+              "headers": {
+                "Content-Type": "application/json",
+                "X-Api-Key": appConfig[0].newsAPI,
+              }
+            });
+          return await response.json();
+        }
+        getNews().then((json) => {
+          var html = "<div class=card-body>";
+          html += "<div class=list-group>";
+          var result = Object.assign({}, json);
+          for (var i = 0; i < json.articles.length; i++) {
+            //Add redundancy
+            var tempObj = {
+              description: result.articles[i].description,
+              publishedAt: result.articles[i].publishedAt,
+              sourceName: result.articles[i].source.name,
+              title: result.articles[i].title,
+              url: result.articles[i].url,
+              urlToImage: result.articles[i].urlToImage
+            }
+            articleList.articleList.push(tempObj);
+            html += "<a target=_blank class=list-group-item href=" + result.articles[i].url;
+            html += ">";
+            html +=
+              "<span>";
+            html += "<img width=100% height=100% src=" + result.articles[i].urlToImage + ">";
+            html +=
+              "</img>";
+            html += "<section>"
+            html += "<h4 class=mb-1>" + result.articles[i].title + "</h4>" + "<small>" + result.articles[i]
+              .publishedAt + "</small>";
+            html += "<p class=mb-1>" + result.articles[i].description + "</p>" +
+              "<small>" + result.articles[i]
+              .source.name + "</small>";
+            html += "</section>";
+            html += "</span>";
+            html += "</a>";
+          }
+          html += "</div>";
+          html += "</div>"
+          document.getElementById("news").innerHTML = html;
+          $("span").css("color", "#2c2c2c");
+          $("span").css("display", "-webkit-box");
+          $("span").css("display", "-moz-box");
+          $("span").css("display", "-ms-flexbox");
+          $("span").css("display", "-webkit-flex");
+          $("span").css("display", "flex");
+          $("img").css("text-align", "left");
+          $("img").css("max-width", "200");
+          $("section").css("margin-left", "25px");
+          // Write to firestore
+          var userRef = db.collection("news").doc("articles");
+          userRef
+            .set(articleList)
+            .then(() => {
+              console.log("Written data to Firestore")
+            }).catch((error) => {
+              console.log("Firestore error code: " + error.code);
+              console.log("Error message: " + error.message);
+            });
+        }).catch(() => {
+          console.log("Fetching backup data");
+          // Get Snapshot from Firestore
+          db.collection("news").doc("articles").onSnapshot((doc) => {
+            articleListDB = doc.data();
+            loadNews(articleListDB);
+          });
+          // Load the backup data
+          function loadNews(articleListDB) {
+            console.log("Loading Data");
+            var htmlBackup = "<div class=card-body>";
+            htmlBackup += "<div class=list-group>";
+            for (var counter = 0; counter < articleListDB.articleList.length; counter++) {
+              htmlBackup += "<a target=_blank class=list-group-item href=" + articleListDB.articleList[counter]
+                .url;
+              htmlBackup += ">";
+              htmlBackup +=
+                "<span>";
+              htmlBackup += "<img width=200 height=100 src=" + articleListDB.articleList[counter].urlToImage +
+              ">";
+              htmlBackup +=
+                "</img>";
+              htmlBackup += "<section>"
+              htmlBackup += "<h4 class=mb-1>" + articleListDB.articleList[counter].title + "</h4>" + "<small>" +
+                articleListDB.articleList[counter]
+                .publishedAt + "</small>";
+              htmlBackup += "<p class=mb-1>" + articleListDB.articleList[counter].description + "</p>" +
+                "<small>" + articleListDB.articleList[counter]
+                .sourceName + "</small>";
+              htmlBackup += "</section>";
+              htmlBackup += "</span>";
+              htmlBackup += "</a>";
+            };
+            htmlBackup += "</div>";
+            htmlBackup += "</div>";
+            document.getElementById("news").innerHTML = htmlBackup;
+            $("span").css("color", "#2c2c2c");
+            $("span").css("display", "-webkit-box");
+            $("span").css("display", "-moz-box");
+            $("span").css("display", "-ms-flexbox");
+            $("span").css("display", "-webkit-flex");
+            $("span").css("display", "flex");
+            $("img").css("text-align", "left");
+            $("img").css("max-width", "200");
+            $("section").css("margin-left", "25px");
+          }
+        });
+      }
+    </script>
+  </div>
+  <!--Necessary Scripts-->
+  <link defer="" href="css/style.min.css" rel="stylesheet">
+  <link defer="" rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+  <script async="" defer="" src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="public" max-age="2628000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="The Right Way to Invest">
+    <meta name="author" content="Octal++">
+    <meta name="keyword" content="stock market,market,finance,index,commodity,futures,forex,prices,stock exchange,bse,nasdaq">
+    <title>Quantitative Algo-Trading</title>
+  </head>
+
+  <body class="c-app" style="font-family: Avenir, Helvetica, Arial, sans-serif;">
+    <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async="">
+          {
+            "symbols": [{
+                "description": "Sensex",
+                "proName": "BSE:SENSEX"
+              },
+              {
+                "description": "USD/INR",
+                "proName": "OANDA:USDINR"
+              },
+              {
+                "description": "Brent Crude Oil",
+                "proName": "TVC:UKOIL"
+              },
+              {
+                "description": "S&P 500",
+                "proName": "FOREXCOM:SPXUSD"
+              },
+              {
+                "description": "Reliance",
+                "proName": "BSE:RELIANCE"
+              }
+            ],
+            "colorTheme": "light",
+            "isTransparent": false,
+            "displayMode": "regular",
+            "locale": "in"
+          }
+        </script>
+      </div>
+      <ul class="c-header-nav ml-auto mr-4">
+        <div data-role="appbar" data-expand-point="md" style="margin-top:50px;background-color:white !important;">
+          <a href="index.html" class="brand no-hover" style="font-family: 'Roboto', sans-serif;">
+            <object type="image/svg+xml" data="assets/logo.svg" height="100%" width="100%" class="logo">
+            </object>
+          </a>
+          <ul class="app-bar-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="marketnews.html">News</a></li>
+            <li><a href="marketinfo.html"> Market Data</a></li>
+            <li><a href="strategy.html">Strategy</a></li>
+            <li><a href="forex.html">Forex</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+          </ul>
+        </div>
+      </ul>
+    </header>
+    <div class="c-wrapper c-fixed-components">
+      <div class="c-body" style="padding-top:15px;">
+        <main class="c-main" >
+          <div class="container-fluid">
+            <div class="fade-in">
+              <div class="row" >
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="margin-top:3.5rem;">
+                  <div class="tradingview-widget-container">
+                  <h2>Market Overwatch</h2>
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async="">
+                    {
+                      "colorTheme": "light",
+                      "dateRange": "1y",
+                      "showChart": true,
+                      "locale": "in",
+                      "width": "100%",
+                      "height": 660,
+                      "largeChartUrl": "",
+                      "isTransparent": false,
+                      "plotLineColorGrowing": "rgba(33, 150, 243, 1)",
+                      "plotLineColorFalling": "rgba(33, 150, 243, 1)",
+                      "gridLineColor": "rgba(240, 243, 250, 1)",
+                      "scaleFontColor": "rgba(120, 123, 134, 1)",
+                      "belowLineFillColorGrowing": "rgba(33, 150, 243, 0.12)",
+                      "belowLineFillColorFalling": "rgba(33, 150, 243, 0.12)",
+                      "symbolActiveColor": "rgba(33, 150, 243, 0.12)",
+                      "tabs": [{
+                          "title": "Indices",
+                          "symbols": [{
+                              "s": "BSE:SENSEX",
+                              "d": "Sensex"
+                            },
+                            {
+                              "s": "BSE:BSE100",
+                              "d": "S&P BSE 100"
+                            },
+                            {
+                              "s": "OANDA:SPX500USD",
+                              "d": "S&P 500"
+                            },
+                            {
+                              "s": "OANDA:NAS100USD",
+                              "d": "Nasdaq 100"
+                            },
+                            {
+                              "s": "TVC:DJI",
+                              "d": "Dow Jones Global"
+                            }
+                          ],
+                          "originalTitle": "Indices"
+                        },
+                        {
+                          "title": "Commodities",
+                          "symbols": [{
+                              "s": "NYMEX:CL1!",
+                              "d": "Crude Oil"
+                            },
+                            {
+                              "s": "COMEX:GC1!",
+                              "d": "Gold"
+                            },
+                            {
+                              "s": "NYMEX:NG1!",
+                              "d": "Natural Gas"
+                            },
+                            {
+                              "s": "CME_MINI:ES1!",
+                              "d": "E-Mini S&P"
+                            },
+                            {
+                              "s": "CME:6E1!",
+                              "d": "Euro"
+                            }
+                          ],
+                          "originalTitle": "Commodities"
+                        },
+                        {
+                          "title": "Forex",
+                          "symbols": [{
+                              "s": "FX_IDC:INRUSD"
+                            },
+                            {
+                              "s": "FX:GBPUSD"
+                            },
+                            {
+                              "s": "FX:USDJPY"
+                            },
+                            {
+                              "s": "FX:USDCHF"
+                            },
+                            {
+                              "s": "FX:AUDUSD"
+                            },
+                            {
+                              "s": "FX:USDCAD"
+                            }
+                          ],
+                          "originalTitle": "Forex"
+                        }
+                      ]
+                    }
+                  </script>
+                  </div>
+                </div>
+                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-6" style="margin-top:3.5rem;">
+                  <div class="tradingview-widget-container">
+                  <h2>Stocks</h2>
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async="">
+                    {
+                      "colorTheme": "light",
+                      "dateRange": "3m",
+                      "exchange": "BSE",
+                      "showChart": true,
+                      "locale": "en",
+                      "largeChartUrl": "",
+                      "isTransparent": false,
+                      "width": "100%",
+                      "height": "660",
+                      "plotLineColorGrowing": "rgba(33, 150, 243, 1)",
+                      "plotLineColorFalling": "rgba(33, 150, 243, 1)",
+                      "gridLineColor": "rgba(240, 243, 250, 1)",
+                      "scaleFontColor": "rgba(120, 123, 134, 1)",
+                      "belowLineFillColorGrowing": "rgba(33, 150, 243, 0.12)",
+                      "belowLineFillColorFalling": "rgba(33, 150, 243, 0.12)",
+                      "symbolActiveColor": "rgba(33, 150, 243, 0.12)"
+                    }
+                  </script>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; flex-direction: row; justify-content: space-around; align-items: center; padding-top: 75px;">
+                <div class="tradingview-widget-container">
+                  <h2>Economic Calendar</h2>
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async="">
+                    {
+                      "colorTheme": "light",
+                      "isTransparent": false,
+                      "width": "100%",
+                      "height": 600,
+                      "locale": "en",
+                      "importanceFilter": "-1,0,1",
+                      "currencyFilter": "INR,USD"
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="c-footer" style="margin-top: 65px;">
+          <a href="issue.html" style=" text-decoration: underline;">Report an Issue</a> &nbsp;&nbsp;&nbsp;|
+          <div>&nbsp;&nbsp;&nbsp;Quantitative Algo-Trading © 2020</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="ml-auto" style="float: left;">Powered by&nbsp;<a href="https://in.tradingview.com/">TradingView</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <link defer="" href="css/style.min.css" rel="stylesheet">
+    <link defer="" rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+    <script async="" defer="" src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+  </body>
+</html>

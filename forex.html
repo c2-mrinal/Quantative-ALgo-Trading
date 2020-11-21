@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="public" max-age="2628000">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="keyword" content="stock market,market,finance,index,commodity,futures,forex,prices,stock exchange,bse,nasdaq">
+    <title>Quantitative Algo-Trading</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      .currency {
+        font-family: 'Muli', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .currency select {
+        background: transparent;
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%20000002%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+        background-repeat: no-repeat, repeat;
+        background-position: right .2em top 50%, 0 0;
+        background-size: .50em auto, 100%;
+        border: 1px solid #d8dbe0;
+        padding-right: 20px;
+        font-size: 1.1rem;
+        -moz-appearance: none;
+        font-weight: bold;
+        color: black;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .currency select>option {
+        height: 45vh;
+      }
+
+      .currency input {
+        background: transparent;
+        border: 1px solid #d8dbe0;
+        padding-right: 20px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: black;
+        text-align: right;
+        margin-left: 20px;
+      }
+
+      .middle {
+        color: #1e2d45;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .middle button {
+        background-color: #fff;
+        border: 1px solid #d8dbe0;
+        margin-left: 70px;
+        margin-right: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #1e2d45;
+        font-size: 30px;
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+      }
+
+      .middle button:active {
+        transform: rotate(90deg) scale(0.9);
+      }
+
+      .middle .rate {
+        font-weight: bolder;
+        font-size: 1rem;
+        display: flex;
+        margin: 0px 0px 25px 0px;
+      }
+
+      select:focus,
+      input:focus,
+      button:focus {
+        outline: 0;
+      }
+      @media (min-width: 481px) and (max-width: 767px) {
+      .forex-heat{
+        width: 100% !important;
+        height: 670px ;
+         overflow-y: hidden;
+         padding-left: 15rem;
+      }
+    }
+    @media (min-width: 320px) and (max-width: 480px) {
+      .forex-heat{
+        height: 670px;
+        width: 100% !important;
+        overflow-y: hidden;
+       padding-left: 20rem;
+      }
+    }
+    </style>
+  </head>
+
+  <body class="c-app" style="font-family: Avenir, Helvetica, Arial, sans-serif;">
+    <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async="">
+          {
+            "symbols": [{
+                "description": "Sensex",
+                "proName": "BSE:SENSEX"
+              },
+              {
+                "description": "USD/INR",
+                "proName": "OANDA:USDINR"
+              },
+              {
+                "description": "Brent Crude Oil",
+                "proName": "TVC:UKOIL"
+              },
+              {
+                "description": "S&P 500",
+                "proName": "FOREXCOM:SPXUSD"
+              },
+              {
+                "description": "Reliance",
+                "proName": "BSE:RELIANCE"
+              }
+            ],
+            "colorTheme": "light",
+            "isTransparent": false,
+            "displayMode": "regular",
+            "locale": "in"
+          }
+        </script>
+      </div>
+      <ul class="c-header-nav ml-auto mr-4">
+        <div data-role="appbar" data-expand-point="md" style="margin-top:50px;background-color:white !important;">
+          <a href="index.html" class="brand no-hover" style="font-family: 'Roboto', sans-serif;">
+            <object type="image/svg+xml" data="assets/logo.svg" height="100%" width="100%" class="logo">
+            </object>
+          </a>
+
+          <ul class="app-bar-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketnews.html">News</a></li>
+            <li><a href="marketinfo.html"> Market Data</a></li>
+            <li><a href="strategy.html">Strategy</a></li>
+            <li><a href="forex.html" class="active">Forex</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+          </ul>
+        </div>
+      </ul>
+    </header>
+    <div class="c-wrapper c-fixed-components">
+      <div class="c-body" style="padding-top:15px; ">
+        <main class="c-main" style="margin-top:20px;">
+          <div class="container-fluid">
+            <div class="fade-in">
+              <div class="row">
+                <div class="col-md-12 col-xs-12 col-lg-6" style="margin:3.5rem 0px 2px;">
+                  <div class="tradingview-widget-container ">
+                    <h2>Forex Cross Rates</h2>
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async="">
+                      {
+                        "width": "100%",
+                        "height": 400,
+                        "currencies": [
+                          "EUR",
+                          "USD",
+                          "JPY",
+                          "GBP",
+                          "CHF",
+                          "AUD",
+                          "CAD",
+                          "NZD",
+                          "CNY",
+                          "INR"
+                        ],
+                        "isTransparent": false,
+                        "colorTheme": "light",
+                        "locale": "en"
+                      }
+                    </script>
+                  </div>
+                </div>
+                <div class="col-md-12 col-xs-12 col-lg-6" style="margin-top: 4rem;">
+                  <h2 style="position: relative; margin:.5em 0px 2px 40px;">Currency Converter</h2>
+                  <div class="card" style="margin-left: .7em;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="form-group col-md-12 col-xs-12 col-lg-6">
+                          <div class="currency">
+                            <select class="form-control form-control-lg" id="from_currency">
+                              <option value="AED">AED</option>
+                              <option value="ARS">ARS</option>
+                              <option value="AUD">AUD</option>
+                              <option value="BGN">BGN</option>
+                              <option value="BRL">BRL</option>
+                              <option value="BSD">BSD</option>
+                              <option value="CAD">CAD</option>
+                              <option value="CHF">CHF</option>
+                              <option value="CLP">CLP</option>
+                              <option value="CNY">CNY</option>
+                              <option value="COP">COP</option>
+                              <option value="CZK">CZK</option>
+                              <option value="DKK">DKK</option>
+                              <option value="DOP">DOP</option>
+                              <option value="EGP">EGP</option>
+                              <option value="EUR">EUR</option>
+                              <option value="FJD">FJD</option>
+                              <option value="GBP">GBP</option>
+                              <option value="GTQ">GTQ</option>
+                              <option value="HKD">HKD</option>
+                              <option value="HRK">HRK</option>
+                              <option value="HUF">HUF</option>
+                              <option value="IDR">IDR</option>
+                              <option value="ILS">ILS</option>
+                              <option value="INR">INR</option>
+                              <option value="ISK">ISK</option>
+                              <option value="JPY">JPY</option>
+                              <option value="KRW">KRW</option>
+                              <option value="KZT">KZT</option>
+                              <option value="MXN">MXN</option>
+                              <option value="MYR">MYR</option>
+                              <option value="NOK">NOK</option>
+                              <option value="NZD">NZD</option>
+                              <option value="PAB">PAB</option>
+                              <option value="PEN">PEN</option>
+                              <option value="PHP">PHP</option>
+                              <option value="PKR">PKR</option>
+                              <option value="PLN">PLN</option>
+                              <option value="PYG">PYG</option>
+                              <option value="RON">RON</option>
+                              <option value="RUB">RUB</option>
+                              <option value="SAR">SAR</option>
+                              <option value="SEK">SEK</option>
+                              <option value="SGD">SGD</option>
+                              <option value="THB">THB</option>
+                              <option value="TRY">TRY</option>
+                              <option value="TWD">TWD</option>
+                              <option value="UAH">UAH</option>
+                              <option value="USD" selected="">USD</option>
+                              <option value="UYU">UYU</option>
+                              <option value="VND">VND</option>
+                              <option value="ZAR">ZAR</option>
+                            </select>
+                            <input type="number" pattern="[0-9]*" class="form-control form-control-lg" step="1" id="from_ammount" value="1">
+                          </div>
+                        </div>
+                      </div>
+                      <!-- exchange button start-->
+                      <div class="row">
+                        <div class="middle">
+                          <div class="form-group col-md-4">
+                            <button id="exchange">
+                              ⇅
+                            </button>
+                          </div>
+                          <div class="rate" id="rate"></div>
+                        </div>
+                        <!-- exchange button end -->
+                        <div class="row">
+                          <div class="form-group col-md-12">
+                            <div class="currency">
+                              <select id="to_currency" class="form-control form-control-lg">
+                                <option value="AED">AED</option>
+                                <option value="ARS">ARS</option>
+                                <option value="AUD">AUD</option>
+                                <option value="BGN">BGN</option>
+                                <option value="BRL">BRL</option>
+                                <option value="BSD">BSD</option>
+                                <option value="CAD">CAD</option>
+                                <option value="CHF">CHF</option>
+                                <option value="CLP">CLP</option>
+                                <option value="CNY">CNY</option>
+                                <option value="COP">COP</option>
+                                <option value="CZK">CZK</option>
+                                <option value="DKK">DKK</option>
+                                <option value="DOP">DOP</option>
+                                <option value="EGP">EGP</option>
+                                <option value="EUR">EUR</option>
+                                <option value="FJD">FJD</option>
+                                <option value="GBP">GBP</option>
+                                <option value="GTQ">GTQ</option>
+                                <option value="HKD">HKD</option>
+                                <option value="HRK">HRK</option>
+                                <option value="HUF">HUF</option>
+                                <option value="IDR">IDR</option>
+                                <option value="ILS">ILS</option>
+                                <option value="INR" selected="">INR</option>
+                                <option value="ISK">ISK</option>
+                                <option value="JPY">JPY</option>
+                                <option value="KRW">KRW</option>
+                                <option value="KZT">KZT</option>
+                                <option value="MXN">MXN</option>
+                                <option value="MYR">MYR</option>
+                                <option value="NOK">NOK</option>
+                                <option value="NZD">NZD</option>
+                                <option value="PAB">PAB</option>
+                                <option value="PEN">PEN</option>
+                                <option value="PHP">PHP</option>
+                                <option value="PKR">PKR</option>
+                                <option value="PLN">PLN</option>
+                                <option value="PYG">PYG</option>
+                                <option value="RON">RON</option>
+                                <option value="RUB">RUB</option>
+                                <option value="SAR">SAR</option>
+                                <option value="SEK">SEK</option>
+                                <option value="SGD">SGD</option>
+                                <option value="THB">THB</option>
+                                <option value="TRY">TRY</option>
+                                <option value="TWD">TWD</option>
+                                <option value="UAH">UAH</option>
+                                <option value="USD">USD</option>
+                                <option value="UYU">UYU</option>
+                                <option value="VND">VND</option>
+                                <option value="ZAR">ZAR</option>
+                              </select>
+                              <input type="number" class="form-control form-control-lg" id="to_ammount" readonly="">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- TradingView Widget END -->
+              <div class="row">
+                <div class="col-md-12 col-xs-12 col-lg-6  forex-heat" style="margin-top: 3rem;">
+                  <div class="tradingview-widget-container" style="padding-right:1.3em;">
+                    <h2 style="">Forex Heat Map</h2>
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async="">
+                      {
+                        "autosize": true,
+                        "width": 660,
+                        "height": 600,
+                        "currencies": [
+                          "EUR",
+                          "USD",
+                          "JPY",
+                          "GBP",
+                          "CHF",
+                          "AUD",
+                          "CAD",
+                          "NZD",
+                          "CNY",
+                          "INR"
+                        ],
+                        "isTransparent": false,
+                        "colorTheme": "light",
+                        "locale": "en"
+                      }
+                    </script>
+                  </div>
+                </div>
+                <div class="col-md-12 col-xs-12 col-lg-6 " style="margin-top:3rem;">
+                  <div class="tradingview-widget-container__widget forex-rate
+                  " style="padding-left:1.4rem;">
+                    <h2>Forex Rates</h2>
+                    <div class="tradingview-widget-container__widget" style="overflow: hidden;"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async="">
+                      {
+                        "width": "100%",
+                        "height": 600,
+                        "symbolsGroups": [{
+                          "name": "Forex",
+                          "originalName": "Forex",
+                          "symbols": [{
+                              "name": "FX:EURUSD"
+                            },
+                            {
+                              "name": "FX:GBPUSD"
+                            },
+                            {
+                              "name": "FX:USDJPY"
+                            },
+                            {
+                              "name": "FX:USDCHF"
+                            },
+                            {
+                              "name": "FX:AUDUSD"
+                            },
+                            {
+                              "name": "FX:USDCAD"
+                            },
+                            {
+                              "name": "FX_IDC:INREUR"
+                            },
+                            {
+                              "name": "FX_IDC:INRCNY"
+                            },
+                            {
+                              "name": "FX_IDC:INRAED"
+                            },
+                            {
+                              "name": "FX_IDC:INRUSD"
+                            }
+                          ]
+                        }],
+                        "colorTheme": "light",
+                        "isTransparent": false,
+                        "locale": "en"
+                      }
+                    </script>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction: row; justify-content: space-around; align-items: center; padding-top:1rem;">
+                <div class="tradingview-widget-container">
+                  <h2>Cryptocurrency</h2>
+                  <div class="tradingview-widget-container__widget"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async="">
+                    {
+                      "width": "100%",
+                      "height": 750,
+                      "defaultColumn": "overview",
+                      "screener_type": "crypto_mkt",
+                      "displayCurrency": "USD",
+                      "colorTheme": "light",
+                      "locale": "en"
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+            const from_currencyEl = document.getElementById('from_currency');
+            const from_ammountEl = document.getElementById('from_ammount');
+            const to_currencyEl = document.getElementById('to_currency');
+            const to_ammountEl = document.getElementById('to_ammount');
+            const rateEl = document.getElementById('rate');
+            const exchange = document.getElementById('exchange');
+
+            from_currencyEl.addEventListener('change', calculate);
+            from_ammountEl.addEventListener('input', calculate);
+            to_currencyEl.addEventListener('change', calculate);
+            to_ammountEl.addEventListener('input', calculate);
+
+            exchange.addEventListener('click', () => {
+              const temp = from_currencyEl.value;
+              from_currencyEl.value = to_currencyEl.value;
+              to_currencyEl.value = temp;
+              calculate();
+            });
+
+            async function calculate() {
+              const from_currency = from_currencyEl.value;
+              const to_currency = to_currencyEl.value;
+              let response = await fetch(
+                "https://alpha-vantage.p.rapidapi.com/query?function=CURRENCY_EXCHANGE_RATE&to_currency=" +
+                `${to_currency}` + "&from_currency=" + `${from_currency}`, {
+                  "method": "GET",
+                  "headers": {
+                    "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
+                    "x-rapidapi-key": "2ff57707ffmshea56c7cc8ce014fp11887djsn57421b958e43"
+                  }
+                });
+              result = await response.json();
+              const rate = result['Realtime Currency Exchange Rate']['5. Exchange Rate'];
+              rateEl.innerText = ` ${from_currency} = ${rate} ${to_currency}`
+              to_ammountEl.value = (from_ammountEl.value * rate).toFixed(2);
+            }
+            calculate();
+          </script>
+        </main>
+        <footer class="c-footer" style="margin-top: 65px;">
+          <a href="issue.html" style=" text-decoration: underline;">Report an Issue</a> &nbsp;&nbsp;&nbsp;|
+          <div>&nbsp;&nbsp;&nbsp;Quantitative Algo-Trading © 2020</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="ml-auto" style="float: left;">Powered by&nbsp;<a href="https://in.tradingview.com/">TradingView</a>
+          </div>
+        </footer>
+      </div>
+      <!--Necessary Scripts-->
+      <link defer="" href="css/style.min.css" rel="stylesheet">
+      <link defer="" rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css">
+      <script async="" defer="" src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
+    </div>
+  </body>
+</html>
