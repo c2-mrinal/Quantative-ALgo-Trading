@@ -76,7 +76,7 @@ Edit files in the / directory. When you run ```npm run serve``` the project will
 
 ### Committing and Pushing to GitHub
 
-Stage all changes. **Include a descriptive commit message clearly stating the changes made.** Push ta new branch and issue a Pull Request to master only if a module is complete, 100% working and doesn't break anything else. **Biswaranjan Padhy** will resolve any conflicts and merge to master as and when required.
+Stage all changes. **Include a descriptive commit message clearly stating the changes made.** Push ta new branch and issue a Pull Request to master only if a module is complete, 100% working and doesn't break anything else. **Mrinal Kasyap** will resolve any conflicts and merge to master as and when required.
 
 - If you have no experience with Git then follow the quick guide at [GitHowTo](https://githowto.com/)
 
