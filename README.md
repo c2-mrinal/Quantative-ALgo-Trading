@@ -17,10 +17,10 @@ The proposed system helps the people in the stock market business and makes it e
 $ cd dir_name
 
 # Clone the repo
-$ git clone https://github.com/bjpadhy/quantitative-algo-trading.git quantitative-algo-trading
+$ git clone git@github.com:c2-mrinal/Quantative-ALgo-Trading.git Quantative-ALgo-Trading
 
 # Go into app's directory
-$ cd quantitative-algo-trading
+$ cd Quantative-ALgo-Trading
 
 # Install app's dependencies
 $ npm install
